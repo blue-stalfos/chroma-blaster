@@ -1,5 +1,4 @@
 // Chroma Blaster by Richard Batista, April 2018
-
 var gameRules = [	"Blow up the UFOs before they blow up your ship!", 
 					"Aim and fire your laser to destroy the UFOs flying around you in space.", 
 					"Use lasers of a complimentary color to destroy:", 
@@ -10,7 +9,7 @@ var gameRules = [	"Blow up the UFOs before they blow up your ship!",
 					"See how long you can last!", 
 					"User ARROW KEYS to move and Z, X, C to fire different colored lasers."];
 
-function Sprite(image, degrees, x, y, vx, vy) {
+function Sprite(x, y, vx, vy, degrees, image) {
 	this.image = image;
 	this.degrees = degrees;
 	this.x = x;
@@ -19,8 +18,9 @@ function Sprite(image, degrees, x, y, vx, vy) {
 	this.vy = vy;
 }
 
-function Player(image, degrees, x, y, vx, vy, rLaserLevel, gLaserLevel, bLaserLevel) {
-	Sprite.call(this, image, degrees, x, y, vx, vy);
+function Player(x, y, vx, vy, degrees, rLaserLevel, gLaserLevel, bLaserLevel) {
+	Sprite.call(this, x, y, vx, vy, degrees);
+	this.image = "img/player.png";
 	this.rLaserLevel = rLaserLevel;
 	this.gLaserLevel = gLaserLevel;
 	this.bLaserLevel = bLaserLevel;
@@ -28,6 +28,19 @@ function Player(image, degrees, x, y, vx, vy, rLaserLevel, gLaserLevel, bLaserLe
 
 Player.prototype = Object.create(Sprite.prototype);
 Player.prototype.constructor = Player;
+
+var playerImage = new Image();
+Player.prototype.draw = function() {
+playerImage.src = this.image;
+console.log(this.x, this.y);
+
+var that = this;
+
+playerImage.onload = function(){
+	ctx.drawImage(playerImage, that.x, that.y, 62, 85)
+}
+
+}
 
 function UFO(image, x, y, vx, vy, color) {
 	Sprite.call(this, image, x, y, vx, vy);
@@ -69,7 +82,7 @@ bgImage.onload = function () {
 bgImage.src = "img/starfield.jpg";
 
 function Game() {
-	var player = new Player("img/player.png", 0, canvas.width / 2, canvas.height / 2, 0, 0, 10, 10, 10)
+	// var player = new Player("img/player.png", 0, canvas.width / 2, canvas.height / 2, 0, 0, 10, 10, 10);
 	var ufo = []; // new UFO objects will have to be pushed into this array as needed
 
 	// modal dialog that displays rules
@@ -88,7 +101,7 @@ function Game() {
 Game.prototype = Object.create(Game.prototype);
 Game.prototype.constructor = Game;
 
-Game.prototype.redrawScreen() {
+Game.prototype.redrawScreen = function() {
 	if (bgReady) {
 		ctx.drawImage(bgImage, 0, 0);
 	}
@@ -110,13 +123,18 @@ Game.prototype.redrawScreen() {
 };
 
 $(document).ready(function() {
-	var width = 800,
-		height = 800,
+	// var width = 800,
+	// 	height = 800,
 		canvas = document.getElementById("theCanvas")
 		ctx = canvas.getContext('2d');
-	canvas.width = width;
-	canvas.height = height;
-	document.body.appendChild(canvas);
+	// canvas.width = width;
+	// canvas.height = height;
+	// document.body.appendChild(canvas);
+
+	var player = new Player(300, 300);
+	console.log(player);
+	player.draw();
+
 
 });
 

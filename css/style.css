@@ -1,3 +1,11 @@
 #theCanvas {
     background:transparent;
 }
+
+.game-board {
+    background-image: url("../img/starfield.jpg");
+    height: 800px;
+    width: 1100px;
+    background-size: contain;
+    margin: 0 auto;
+}
