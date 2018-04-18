@@ -33,9 +33,10 @@ function startGame() {
 		currentGame = new Game();
 		// var Player = function(x, y, vx, vy, direction, image, rLaserLevel, gLaserLevel, bLaserLevel)
 		var player = new Player(canvas.width / 2, canvas.height / 2, 0, 0, "N", "img/player-n.png", 10, 10, 10);
-		var ufo = [new UFO("img/ufo.cyan.png", 200, 200, 0, 0, "cyan")];
+		var ufo = [];
 		currentGame.player = player;
 		currentGame.ufo = ufo;
+		spawnUFO();
 		currentGame.player.draw();
 		document.onkeydown = function(e) { currentGame.player.move(e); };
 	}
@@ -45,9 +46,9 @@ function redrawBackground() {
 	var bgImage = new Image();
 	bgImage.src = "img/starfield.jpg";
 }
-
 function refreshCanvas() {
-	ctx.clearRect(0,0,800,1100);
+	ctx.clearRect(0,0,1100,800);
 	redrawBackground();
 	currentGame.player.reDraw();
+	currentGame.ufo.reDraw();
 }

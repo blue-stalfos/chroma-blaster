@@ -6,7 +6,7 @@ var Sprite = function(x, y, vx, vy, image) {
 	this.vy = vy;
 }
 
-var playerSpeed = 5;
+var playerSpeed = 15;
 var playerImage = new Image();
 var Player = function(x, y, vx, vy, direction, image, rLaserLevel, gLaserLevel, bLaserLevel) {
 	Sprite.call(this, x, y, vx, vy);
@@ -42,7 +42,7 @@ Player.prototype.move = function(e) {
 				this.y -= playerSpeed;
 				break;
 			case "NE":
-				this.x += playerSpeed5;
+				this.x += playerSpeed;
 				this.y -= playerSpeed;
 				break;
 			case "E":
@@ -155,27 +155,35 @@ var UFO = function(x, y, vx, vy, image, color) {
 }	
 UFO.prototype = Object.create(UFO.prototype);
 UFO.prototype.constructor = UFO;
-UFO.prototype.spawn = function() {
+UFO.prototype.reDraw = function(index) {
+	ctx.drawImage(this[index].image, this.x, this.y, 85, 85);
+}
+function spawnUFO() {
 	var randomX = Math.floor(Math.random() * canvas.width);
 	var randomY = Math.floor(Math.random() * canvas.height);
 	var randomColorSeed = Math.floor(Math.random() * 3);
-	
+	var image = null;
+	var color = null;
+
 	switch(randomColorSeed) {
 		case 0:
-			var randomColor = "img/ufo-cyan.png"
+			var image = "img/ufo-cyan.png";
+			var color = "cyan";
 			break;
 		case 1:
-			var randomColor = "img/ufo-magenta.png"
+			var image = "img/ufo-magenta.png"
+			var color = "magenta";
 			break;
 		case 2:
-			var randomColor = "img/ufo-yellow.png"
+			var image = "img/ufo-yellow.png"
+			var color = "yellow";
 			break;
 		default:
-			var randomColor = "img/player.png"
+			console.log("UFO spawn failed. :(");
 			break;
 	}
-
-	this.push(new UFO(randomColor, randomX, randomY, 0, 0));
+//	var UFO = function(x, y, vx, vy, image, color)
+	currentGame.ufo.push(new UFO(randomX, randomY, 0, 0, image, color));
 }
 // UFO.prototype.move = function() {
 	
