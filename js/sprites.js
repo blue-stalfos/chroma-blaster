@@ -1,16 +1,17 @@
-var Sprite = function(x, y, vx, vy, degrees, image) {
+var Sprite = function(x, y, vx, vy, image) {
 	this.image = image;
-	this.degrees = degrees;
 	this.x = x;
 	this.y = y;
 	this.vx = vx;
 	this.vy = vy;
 }
 
+var playerSpeed = 5;
 var playerImage = new Image();
-var Player = function(x, y, vx, vy, degrees, rLaserLevel, gLaserLevel, bLaserLevel) {
-	Sprite.call(this, x, y, vx, vy, degrees);
-	this.image = "img/player.png";
+var Player = function(x, y, vx, vy, direction, image, rLaserLevel, gLaserLevel, bLaserLevel) {
+	Sprite.call(this, x, y, vx, vy);
+	this.direction = direction;
+	this.image = image;
 	this.rLaserLevel = rLaserLevel;
 	this.gLaserLevel = gLaserLevel;
 	this.bLaserLevel = bLaserLevel;
@@ -25,93 +26,132 @@ Player.prototype.draw = function() {
 	var that = this;
 
 	playerImage.onload = function() {
-		ctx.drawImage(playerImage, that.x, that.y, 62, 85);
+		ctx.drawImage(playerImage, that.x, that.y, 85, 85);
 	}
 }
 Player.prototype.reDraw = function() {
-	ctx.drawImage(playerImage, this.x, this.y, 62, 85);
+	ctx.drawImage(playerImage, this.x, this.y, 85, 85);
 }
 Player.prototype.move = function(e) {
-	console.log("move called!");
-	console.log(e.keyCode);
-	console.log("degrees:" + this.degrees);
-	console.log(this.x + " " + this.y);
 	e.preventDefault();
 
-	if(e.keyCode === 38) {
-		if (this.degrees === 0) {
-			this.y -= 5;
-			console.log(this.x);
-		}
-		if(this.degrees % 90 === 0 && this.degrees !== 0) {
-			console.log("sin/cos called");
-			
-			if(this.degrees === 90) {
-				this.x += 2;
-		
-			}
-			if(this.degrees === 180) {
-				this.y =+ 2;
-				
-			}
-			if(this.degrees === 270) {
-				this.x -= 2;
-		
-			}
+	if(e.keyCode === 38) { // Up Arrow
+		console.log("Up Arrow!");
+		switch(this.direction) {
+			case "N":
+				this.y -= playerSpeed;
+				break;
+			case "NE":
+				this.x += playerSpeed5;
+				this.y -= playerSpeed;
+				break;
+			case "E":
+				this.x += playerSpeed;
+				break;
+			case "SE":
+				this.x += playerSpeed;
+				this.y += playerSpeed;
+				break;
+			case "S":
+				this.y += playerSpeed;
+				break;
+			case "SW":
+				this.x -= playerSpeed;
+				this.y += playerSpeed;
+				break;
+			case "W":
+				this.x -= playerSpeed;
+				break;
+			case "NW":
+				this.x -= playerSpeed;
+				this.y -= playerSpeed;
+				break;
 		}
 	} 
-	if(e.keyCode === 37) {
-		this.degrees -= 2;
+
+	if(e.keyCode === 37) { // Left Arrow
+		console.log("Left Arrow!")
+		switch(this.direction) {
+			case "N":
+				this.direction = "NW";
+				playerImage.src = "img/player-nw.png";
+				break;
+			case "NE":
+				this.direction = "N";
+				playerImage.src = "img/player-n.png";
+				break;
+			case "E":
+				this.direction = "NE";
+				playerImage.src = "img/player-ne.png";
+				break;
+			case "SE":
+				this.direction = "E";
+				playerImage.src = "img/player-e.png";
+				break;
+			case "S":
+				this.direction = "SE";
+				playerImage.src = "img/player-se.png";
+				break;
+			case "SW":
+				this.direction = "S";
+				playerImage.src = "img/player-s.png";
+				break;
+			case "W":
+				this.direction = "SW";
+				playerImage.src = "img/player-sw.png";
+				break;
+			case "NW":
+				this.direction = "W";
+				playerImage.src = "img/player-w.png";
+				break;
+		}
 	}
 
-	if(e.keyCode === 39) {
-		this.degrees += 2;
+	if(e.keyCode === 39) { // Right Arrow
+		console.log("Right Arrow!")
+		switch(this.direction) {
+			case "N":
+				this.direction = "NE";
+				playerImage.src = "img/player-ne.png";
+				break;
+			case "NE":
+				this.direction = "E";
+				playerImage.src = "img/player-e.png";
+				break;
+			case "E":
+				this.direction = "SE";
+				playerImage.src = "img/player-se.png";
+				break;
+			case "SE":
+				this.direction = "S";
+				playerImage.src = "img/player-s.png";
+				break;
+			case "S":
+				this.direction = "SW";
+				playerImage.src = "img/player-sw.png";
+				break;
+			case "SW":
+				this.direction = "W";
+				playerImage.src = "img/player-w.png";
+				break;
+			case "W":
+				this.direction = "NW";
+				playerImage.src = "img/player-nw.png";
+				break;
+			case "NW":
+				this.direction = "N";
+				playerImage.src = "img/player-n.png";
+				break;
+		}
 	}
-
-	currentGame.player.reDraw();
-	// switch(e.keyCode) {
-	// 	case e.keyCode === 38:
-	// 		if(this.degrees === 0) {
-	// 			this.y -= 2;
-	// 			console.log("0 degrees!");
-	// 			break;
-	// 		}
-	// 		if(this.degrees % 90 === 0) {
-	// 			console.log("sin/cos called");
-				
-	// 			if(this.degrees === 90) {
-	// 				that.x += 2;
-	// 				break;
-	// 			}
-	// 			if(this.degrees === 180) {
-	// 				that.y =+ 2;
-	// 				break;
-	// 			}
-	// 			if(this.degrees === 270) {
-	// 				that.x -= 2;
-	// 				break;
-	// 			}
-	// 		break;
-	// 		}
-	
-	// 	case e.keyCode === 37:
-	// 		this.degrees -= 2;
-	// 		break;
-		
-	// 	case e.keyCode === 39:
-	// 		this.degrees += 2;
-	// 		break;
-
-	// // 	default:
-	// 		this.x += Math.cos(this.degrees);
-	// 		this.y += Math.sin(this.degrees);
-	// 		break;
-	// }
+	console.log(this.x, this.y);
+	refreshCanvas();
 }
 
-var UFO = function(image, x, y, vx, vy, color) {
-	Sprite.call(this, image, x, y, vx, vy);
+var UFO = function(x, y, vx, vy, image, color) {
+	Sprite.call(this, x, y, vx, vy, image);
 	this.color = color;
+	this.image = image;
 }	
 UFO.prototype = Object.create(UFO.prototype);
 UFO.prototype.constructor = UFO;
@@ -137,24 +177,9 @@ UFO.prototype.spawn = function() {
 
 	this.push(new UFO(randomColor, randomX, randomY, 0, 0));
 }
-UFO.prototype.move = function() {
-	if(this.degrees % 90 !== 0) {
-		this.x += Math.cos(player.degrees);
-		this.y += Math.sin(player.degrees);
-	}
-	if(player.degrees === 0) {
-		this.y -= 2;
-	}
-	if(player.degrees === 90) {
-		this.x += 2;
-	}
-	if(player.degrees === 180) {
-		this.y =+ 2;
-	}
-	if(player.degrees === 270) {
-		this.x -= 2;
-	}
-}
+// UFO.prototype.move = function() {
+	
+// }
 
 function rotateSprite(whichSprite) {
 	var image = new Image();
@@ -199,6 +224,5 @@ function rotateSprite(whichSprite) {
 
 		window.requestAnimationFrame(loop);
 	};
-
 	// ====================================================================================
 };
