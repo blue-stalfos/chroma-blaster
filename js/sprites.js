@@ -1,4 +1,4 @@
-function Sprite(x, y, vx, vy, degrees, image) {
+var Sprite = function(x, y, vx, vy, degrees, image) {
 	this.image = image;
 	this.degrees = degrees;
 	this.x = x;
@@ -7,7 +7,8 @@ function Sprite(x, y, vx, vy, degrees, image) {
 	this.vy = vy;
 }
 
-function Player(x, y, vx, vy, degrees, rLaserLevel, gLaserLevel, bLaserLevel) {
+var playerImage = new Image();
+var Player = function(x, y, vx, vy, degrees, rLaserLevel, gLaserLevel, bLaserLevel) {
 	Sprite.call(this, x, y, vx, vy, degrees);
 	this.image = "img/player.png";
 	this.rLaserLevel = rLaserLevel;
@@ -17,11 +18,8 @@ function Player(x, y, vx, vy, degrees, rLaserLevel, gLaserLevel, bLaserLevel) {
 
 Player.prototype = Object.create(Sprite.prototype);
 Player.prototype.constructor = Player;
-
-var playerImage = new Image();
-
 Player.prototype.draw = function() {
-	playerImage.src = this.image;
+	playerImage.src = currentGame.player.image;
 	console.log(this.x, this.y);
 
 	var that = this;
@@ -30,47 +28,93 @@ Player.prototype.draw = function() {
 		ctx.drawImage(playerImage, that.x, that.y, 62, 85);
 	}
 }
-
+Player.prototype.reDraw = function() {
+	ctx.drawImage(playerImage, this.x, this.y, 62, 85);
+}
 Player.prototype.move = function(e) {
-	switch(e) {
-		case e.keyCode === 38:
-			if(this.degrees % 90 !== 0) {
-				this.x += Math.cos(this.degrees);
-				this.y += Math.sin(this.degrees);
-			}
-			if(player.degrees === 0) {
-				this.y -= 2;
-			}
-			if(player.degrees === 90) {
+	console.log("move called!");
+	console.log(e.keyCode);
+	console.log("degrees:" + this.degrees);
+	console.log(this.x + " " + this.y);
+	e.preventDefault();
+
+	if(e.keyCode === 38) {
+		if (this.degrees === 0) {
+			this.y -= 5;
+			console.log(this.x);
+		}
+		if(this.degrees % 90 === 0 && this.degrees !== 0) {
+			console.log("sin/cos called");
+			
+			if(this.degrees === 90) {
 				this.x += 2;
+		
 			}
-			if(player.degrees === 180) {
+			if(this.degrees === 180) {
 				this.y =+ 2;
+				
 			}
-			if(player.degrees === 270) {
+			if(this.degrees === 270) {
 				this.x -= 2;
+		
 			}
-			break;
-		
-		case e.keyCode === 37:
-			this.degrees -= 2;
-			break;
-		
-		case e.keyCode === 39:
-			this.degrees += 2;
-			break;
+		}
+	} 
+	if(e.keyCode === 37) {
+		this.degrees -= 2;
 	}
-	// this.draw();
+
+	if(e.keyCode === 39) {
+		this.degrees += 2;
+	}
+
+	currentGame.player.reDraw();
+	// switch(e.keyCode) {
+	// 	case e.keyCode === 38:
+	// 		if(this.degrees === 0) {
+	// 			this.y -= 2;
+	// 			console.log("0 degrees!");
+	// 			break;
+	// 		}
+	// 		if(this.degrees % 90 === 0) {
+	// 			console.log("sin/cos called");
+				
+	// 			if(this.degrees === 90) {
+	// 				that.x += 2;
+	// 				break;
+	// 			}
+	// 			if(this.degrees === 180) {
+	// 				that.y =+ 2;
+	// 				break;
+	// 			}
+	// 			if(this.degrees === 270) {
+	// 				that.x -= 2;
+	// 				break;
+	// 			}
+	// 		break;
+	// 		}
+	
+	// 	case e.keyCode === 37:
+	// 		this.degrees -= 2;
+	// 		break;
+		
+	// 	case e.keyCode === 39:
+	// 		this.degrees += 2;
+	// 		break;
+
+	// // 	default:
+	// 		this.x += Math.cos(this.degrees);
+	// 		this.y += Math.sin(this.degrees);
+	// 		break;
+	// }
 }
 
-function UFO(image, x, y, vx, vy, color) {
+var UFO = function(image, x, y, vx, vy, color) {
 	Sprite.call(this, image, x, y, vx, vy);
 	this.color = color;
 }	
-
 UFO.prototype = Object.create(UFO.prototype);
 UFO.prototype.constructor = UFO;
-
 UFO.prototype.spawn = function() {
 	var randomX = Math.floor(Math.random() * canvas.width);
 	var randomY = Math.floor(Math.random() * canvas.height);
@@ -93,7 +137,6 @@ UFO.prototype.spawn = function() {
 
 	this.push(new UFO(randomColor, randomX, randomY, 0, 0));
 }
-
 UFO.prototype.move = function() {
 	if(this.degrees % 90 !== 0) {
 		this.x += Math.cos(player.degrees);
