@@ -56,6 +56,7 @@ function refreshCanvas() {
 		redrawBackground();
 		currentGame.player.reDraw();
 		currentGame.ufo.forEach(function(oneUFO){
+			
 			oneUFO.reDraw();
 		});//forEach
 	}, 100);//setInverval
