@@ -13,6 +13,7 @@ var gameRules = [	"Blow up the UFOs before they blow up your ship!",
 var Game = function(){
 	this.player = {};
 	this.ufo = [];
+	this.laser ={};
   }
 					
 window.onload = function() {
@@ -40,6 +41,16 @@ function refreshCanvas() {
 			oneUFO.reDraw();
 			
 		});		//forEach
+		if(currentGame.laser.exists){
+			ctx.beginPath();
+			ctx.moveTo(currentGame.laser.x, currentGame.laser.y);
+			ctx.lineTo(currentGame.laser.endpointx, currentGame.laser.endpointy);
+			ctx.strokeStyle="red";
+			ctx.stroke();
+			ctx.closePath();
+		}
+
+
 	}, 100);	//setInverval
 }
 
@@ -58,10 +69,9 @@ function startGame() {
 
 	setInterval(function(){
 		spawnUFO();
-	},3000)
+	},1000)
 
 	refreshCanvas();
-
 }
 
 // 	currentGame.ufo.forEach(function(oneUFO){
