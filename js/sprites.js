@@ -145,7 +145,7 @@ Player.prototype.move = function(e) {
 		}
 	}
 	console.log(this.x, this.y);
-	refreshCanvas();
+	// refreshCanvas();
 }
 
 var UFO = function(x, y, vx, vy, image, color) {
@@ -153,11 +153,22 @@ var UFO = function(x, y, vx, vy, image, color) {
 	this.color = color;
 	this.image = image;
 }	
-UFO.prototype = Object.create(UFO.prototype);
+UFO.prototype = Object.create(Sprite.prototype);
 UFO.prototype.constructor = UFO;
-UFO.prototype.reDraw = function(index) {
-	ctx.drawImage(this[index].image, this.x, this.y, 85, 85);
+
+UFO.prototype.reDraw = function() {
+	var theImage = new Image();
+	theImage.src = this.image;
+	ctx.drawImage(theImage, this.x, this.y, 85, 85);
 }
+
+UFO.prototype.moveAround(){
+
+	
+}
+
+
+
 function spawnUFO() {
 	var randomX = Math.floor(Math.random() * canvas.width);
 	var randomY = Math.floor(Math.random() * canvas.height);
@@ -184,6 +195,7 @@ function spawnUFO() {
 	}
 //	var UFO = function(x, y, vx, vy, image, color)
 	currentGame.ufo.push(new UFO(randomX, randomY, 0, 0, image, color));
+	console.log("ufo array", currentGame.ufo);
 }
 // UFO.prototype.move = function() {
 	
