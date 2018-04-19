@@ -164,45 +164,48 @@ UFO.prototype.reDraw = function() {
 }
 
 UFO.prototype.moveAround = function() {
-	var randomDirectionSeed = null;
+	var randomDirectionSeed = 0;
 	
-	setInterval(function(){
+	setInterval(function() {
 		randomDirectionSeed = Math.floor(Math.random() * 8);
 	},2000);
 
-	switch(randomDirectionSeed) {
-		case 0:
-			this.y -= playerSpeed;
-			break;
-		case 1:
-			this.x += playerSpeed;
-			this.y -= playerSpeed;
-			break;
-		case 2:
-			this.x += playerSpeed;
-			break;
-		case 3:
-			this.x += playerSpeed;
-			this.y += playerSpeed;
-			break;
-		case 4:
-			this.y += playerSpeed;
-			break;
-		case 5:
-			this.x -= playerSpeed;
-			this.y += playerSpeed;
-			break;
-		case 6:
-			this.x -= playerSpeed;
-			break;
-		case 7:
-			this.x -= playerSpeed;
-			this.y -= playerSpeed;
-			break;
-	}
+	setInterval(function() {
+		switch(randomDirectionSeed) {
+			case 0:
+				this.y -= playerSpeed;
+				break;
+			case 1:
+				this.x += playerSpeed;
+				this.y -= playerSpeed;
+				break;
+			case 2:
+				this.x += playerSpeed;
+				break;
+			case 3:
+				this.x += playerSpeed;
+				this.y += playerSpeed;
+				break;
+			case 4:
+				this.y += playerSpeed;
+				break;
+			case 5:
+				this.x -= playerSpeed;
+				this.y += playerSpeed;
+				break;
+			case 6:
+				this.x -= playerSpeed;
+				break;
+			case 7:
+				this.x -= playerSpeed;
+				this.y -= playerSpeed;
+				break;
+		}
+	},100);
 }
 
 function spawnUFO() {
+	var index = 0;
 	var randomX = Math.floor(Math.random() * canvas.width);
 	var randomY = Math.floor(Math.random() * canvas.height);
 	var randomColorSeed = Math.floor(Math.random() * 3);
@@ -229,6 +232,8 @@ function spawnUFO() {
 //	var UFO = function(x, y, vx, vy, image, color)
 	currentGame.ufo.push(new UFO(randomX, randomY, 0, 0, image, color));
 	console.log("ufo array", currentGame.ufo);
+	currentGame.ufo[index].moveAround();
+	   index++;
 }
 
 

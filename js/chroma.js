@@ -26,6 +26,23 @@ window.onload = function() {
 	startGame();
 }
 
+function redrawBackground() {
+	var bgImage = new Image();
+	bgImage.src = "img/starfield.jpg";
+}
+
+function refreshCanvas() {
+	setInterval(function(){
+		ctx.clearRect(0,0,1100,800);
+		redrawBackground();
+		currentGame.player.reDraw();
+		currentGame.ufo.forEach(function(oneUFO){
+			oneUFO.reDraw();
+			
+		});		//forEach
+	}, 100);	//setInverval
+}
+
 var canStart = true;
 
 function startGame() {
@@ -44,20 +61,12 @@ function startGame() {
 	},3000)
 
 	refreshCanvas();
+
 }
 
-function redrawBackground() {
-	var bgImage = new Image();
-	bgImage.src = "img/starfield.jpg";
-}
-function refreshCanvas() {
-	setInterval(function(){
-		ctx.clearRect(0,0,1100,800);
-		redrawBackground();
-		currentGame.player.reDraw();
-		currentGame.ufo.forEach(function(oneUFO){
-			
-			oneUFO.reDraw();
-		});//forEach
-	}, 100);//setInverval
-	}
+// 	currentGame.ufo.forEach(function(oneUFO){
+// 		oneUFO.moveAround();
+// 	});	
+
+// 	refreshCanvas();
+// }
