@@ -48,6 +48,7 @@ function refreshCanvas() {
 			ctx.strokeStyle="red";
 			ctx.stroke();
 			ctx.closePath();
+			detectCollision();
 		}
 
 
