@@ -391,7 +391,8 @@ function spawnUFO() {
 
 function detectCollision() {
 	currentGame.ufo.forEach(function(oneUFO) {
-		if (((oneUFO.x + 62.5) - (currentGame.player.x + 42.5) <= 40 && (oneUFO.y + 62.5) - (currentGame.player.y + 42.5) <= 40)) {
+		if (((oneUFO.x + 62.5) - (currentGame.player.x + 42.5) <= 40 && 
+			(oneUFO.y + 62.5) - (currentGame.player.y + 42.5) <= 40)) {
 				currentGame.player.hit = true;
 			};
 		if (currentGame.laser.exists = true && 
@@ -401,7 +402,7 @@ function detectCollision() {
 			};
 		if (oneUFO.hit === true) { oneUFO.image = "img/blank.png"; };
 		// if (currentGame.player.hit = true) { 
-		// 	enableMovement = false;
-		// 	// playerImage.src = "img/mindblown.png"; };
+			// enableMovement = false;
+			// playerImage.src = "img/mindblown.png"; };
 	});
 };
