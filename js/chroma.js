@@ -1,22 +1,24 @@
 // Chroma Blaster by Richard Batista, April 2018
 
-var gameRules = [	"Blow up the UFOs before they blow up your ship!", 
-					"Aim and fire your laser to destroy the UFOs flying around you in space.", 
-					"Use lasers of a complimentary color to destroy:", 
-					"🚀 Red destroys Cyan", 
-					"🛸 Blue destroys Yellow", 
-					"👾 Green destroys Magenta", 
-					"Using the wrong color will make them bigger.", 
-					"See how long you can last!", 
+var gameRules = [	"Blow up the UFOs before they blow up your ship!",
+					"Aim and fire your laser to destroy the UFOs flying around you in space.",
+					"Use lasers of a complimentary color to destroy:",
+					"🚀 Red destroys Cyan",
+					"🛸 Blue destroys Yellow",
+					"👾 Green destroys Magenta",
+					"Using the wrong color will make them bigger.",
+					"See how long you can last!",
 					"User ARROW KEYS to move and Z, X, C to fire different colored lasers."];
 
-var Game = function(){
-	this.player = {};
-	this.ufo = [];
-	this.laser ={};
-  }
-					
-window.onload = function() {
+class Game {
+	constructor() {
+		this.player = {};
+		this.ufo = [];
+		this.laser = {};
+	}
+}
+
+window.onload = () => {
 	var currentGame;
 	canvas = document.getElementById("theCanvas")
 	ctx = canvas.getContext('2d');
@@ -39,7 +41,7 @@ function refreshCanvas() {
 		currentGame.player.reDraw();
 		currentGame.ufo.forEach(function(oneUFO){
 			oneUFO.reDraw();
-			
+
 		});		//forEach
 		if(currentGame.laser.exists){
 			ctx.beginPath();
@@ -60,7 +62,6 @@ var canStart = true;
 function startGame() {
 	if(canStart) {
 		currentGame = new Game();
-		// var Player = function(x, y, vx, vy, direction, image, rLaserLevel, gLaserLevel, bLaserLevel)
 		var player = new Player(canvas.width / 2, canvas.height / 2, 0, 0, "N", "img/player-n.png", 10, 10, 10);
 		currentGame.player = player;
 		// spawnUFO();
@@ -77,7 +78,7 @@ function startGame() {
 
 // 	currentGame.ufo.forEach(function(oneUFO){
 // 		oneUFO.moveAround();
-// 	});	
+// 	});
 
 // 	refreshCanvas();
 // }
