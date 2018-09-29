@@ -10,6 +10,3 @@ RULES:
 		👾 Green destroys Magenta 				
 4. See how long you can last!", 
 5. User ARROW KEYS to move and Z, ~~X, C~~ to fire different colored lasers.
-
-Play:
-https://blue-stalfos.github.io/chroma-blaster/

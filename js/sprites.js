@@ -1,297 +1,265 @@
-class Sprite {
-	constructor(x, y, vx, vy, image) {
-		this.image = image;
-		this.x = x;
-		this.y = y;
-		this.vx = vx;
-		this.vy = vy;
-	}
+var Sprite = function(x, y, vx, vy, image) {
+	this.image = image;
+	this.x = x;
+	this.y = y;
+	this.vx = vx;
+	this.vy = vy;
 }
 
 var enableMovement = true;
 var playerSpeed = 15;
 var playerImage = new Image();
-class Player {
-	constructor(x, y, vx, vy, direction, image, rLaserLevel, gLaserLevel, bLaserLevel, hit, laserFired) {
-		Sprite.call(this, x, y, vx, vy);
-		this.direction = direction;
-		this.image = image;
-		this.rLaserLevel = rLaserLevel;
-		this.gLaserLevel = gLaserLevel;
-		this.bLaserLevel = bLaserLevel;
-	}
-	draw() {
-		playerImage.src = currentGame.player.image;
-		console.log(this.x, this.y);
-		var that = this;
-		playerImage.onload = function () {
-			ctx.drawImage(playerImage, that.x, that.y, 85, 85);
-		};
-	}
-	reDraw() {
-		ctx.drawImage(playerImage, this.x, this.y, 85, 85);
-	}
-	move(e) {
-		e.preventDefault();
-		if (enableMovement) {
-			if (e.keyCode === 38) { // Up Arrow
-				console.log("Up Arrow!");
-				switch (this.direction) {
-					case "N":
-						this.y -= playerSpeed;
-						break;
-					case "NE":
-						this.x += playerSpeed;
-						this.y -= playerSpeed;
-						break;
-					case "E":
-						this.x += playerSpeed;
-						break;
-					case "SE":
-						this.x += playerSpeed;
-						this.y += playerSpeed;
-						break;
-					case "S":
-						this.y += playerSpeed;
-						break;
-					case "SW":
-						this.x -= playerSpeed;
-						this.y += playerSpeed;
-						break;
-					case "W":
-						this.x -= playerSpeed;
-						break;
-					case "NW":
-						this.x -= playerSpeed;
-						this.y -= playerSpeed;
-						break;
-				}
-			}
-			if (e.keyCode === 37) { // Left Arrow
-				console.log("Left Arrow!");
-				switch (this.direction) {
-					case "N":
-						this.direction = "NW";
-						playerImage.src = "img/player-nw.png";
-						break;
-					case "NE":
-						this.direction = "N";
-						playerImage.src = "img/player-n.png";
-						break;
-					case "E":
-						this.direction = "NE";
-						playerImage.src = "img/player-ne.png";
-						break;
-					case "SE":
-						this.direction = "E";
-						playerImage.src = "img/player-e.png";
-						break;
-					case "S":
-						this.direction = "SE";
-						playerImage.src = "img/player-se.png";
-						break;
-					case "SW":
-						this.direction = "S";
-						playerImage.src = "img/player-s.png";
-						break;
-					case "W":
-						this.direction = "SW";
-						playerImage.src = "img/player-sw.png";
-						break;
-					case "NW":
-						this.direction = "W";
-						playerImage.src = "img/player-w.png";
-						break;
-				}
-			}
-			if (e.keyCode === 39) { // Right Arrow
-				console.log("Right Arrow!");
-				switch (this.direction) {
-					case "N":
-						this.direction = "NE";
-						playerImage.src = "img/player-ne.png";
-						break;
-					case "NE":
-						this.direction = "E";
-						playerImage.src = "img/player-e.png";
-						break;
-					case "E":
-						this.direction = "SE";
-						playerImage.src = "img/player-se.png";
-						break;
-					case "SE":
-						this.direction = "S";
-						playerImage.src = "img/player-s.png";
-						break;
-					case "S":
-						this.direction = "SW";
-						playerImage.src = "img/player-sw.png";
-						break;
-					case "SW":
-						this.direction = "W";
-						playerImage.src = "img/player-w.png";
-						break;
-					case "W":
-						this.direction = "NW";
-						playerImage.src = "img/player-nw.png";
-						break;
-					case "NW":
-						this.direction = "N";
-						playerImage.src = "img/player-n.png";
-						break;
-				}
-			}
-			if (e.keyCode === 90) { // fire red
-				currentGame.laser = { exists: true };
-				console.log(currentGame);
-				switch (this.direction) {
-					case "N":
-						currentGame.laser.x = currentGame.player.x + 42.5;
-						currentGame.laser.y = currentGame.player.y + 0;
-						currentGame.laser.endpointx = currentGame.player.x + 0 + 42.5;
-						currentGame.laser.endpointy = currentGame.player.y - 125 + 0;
-						// ctx.moveTo(currentGame.player.x, currentGame.player.y);
-						// ctx.lineTo(currentGame.player.x + 0, currentGame.player.y - 25);
-						// ctx.strokeStyle="red";
-						// ctx.stroke();
-						break;
-					case "NE":
-						currentGame.laser.x = currentGame.player.x + 85;
-						currentGame.laser.y = currentGame.player.y + 0;
-						currentGame.laser.endpointx = currentGame.player.x + 125 + 85;
-						currentGame.laser.endpointy = currentGame.player.y - 125 + 0;
-						// ctx.moveTo(currentGame.player.x, currentGame.player.y);
-						// ctx.lineTo(currentGame.player.x + 25, currentGame.player.y - 25);
-						// ctx.strokeStyle="red";
-						// ctx.stroke();
-						break;
-					case "E":
-						currentGame.laser.x = currentGame.player.x + 85;
-						currentGame.laser.y = currentGame.player.y + 42.5;
-						currentGame.laser.endpointx = currentGame.player.x + 125 + 85;
-						currentGame.laser.endpointy = currentGame.player.y + 0 + 42.5;
-						// ctx.moveTo(currentGame.player.x, currentGame.player.y);
-						// ctx.lineTo(currentGame.player.x + 25, currentGame.player.y + 0);
-						// ctx.strokeStyle="red";
-						// ctx.stroke();
-						break;
-					case "SE":
-						currentGame.laser.x = currentGame.player.x + 85;
-						currentGame.laser.y = currentGame.player.y + 85;
-						currentGame.laser.endpointx = currentGame.player.x + 125 + 85;
-						currentGame.laser.endpointy = currentGame.player.y + 125 + 85;
-						// ctx.moveTo(currentGame.player.x, currentGame.player.y);
-						// ctx.lineTo(currentGame.player.x + 25, currentGame.player.y +25);
-						// ctx.strokeStyle="red";
-						// ctx.stroke();
-						break;
-					case "S":
-						currentGame.laser.x = currentGame.player.x + 42.5;
-						currentGame.laser.y = currentGame.player.y + 85;
-						currentGame.laser.endpointx = currentGame.player.x + 0 + 42.5;
-						currentGame.laser.endpointy = currentGame.player.y + 125 + 85;
-						// ctx.moveTo(currentGame.player.x, currentGame.player.y);
-						// ctx.lineTo(currentGame.player.x + 0, currentGame.player.y + 25);
-						// ctx.strokeStyle="red";
-						// ctx.stroke();
-						break;
-					case "SW":
-						currentGame.laser.x = currentGame.player.x + 0;
-						currentGame.laser.y = currentGame.player.y + 85;
-						currentGame.laser.endpointx = currentGame.player.x - 125 + 0;
-						currentGame.laser.endpointy = currentGame.player.y + 125 + 85;
-						// ctx.moveTo(currentGame.player.x, currentGame.player.y);
-						// ctx.lineTo(currentGame.player.x - 25, currentGame.player.y + 25);
-						// ctx.strokeStyle="red";
-						// ctx.stroke();
-						break;
-					case "W":
-						currentGame.laser.x = currentGame.player.x + 0;
-						currentGame.laser.y = currentGame.player.y + 42.5;
-						currentGame.laser.endpointx = currentGame.player.x - 125 + 0;
-						currentGame.laser.endpointy = currentGame.player.y + 0 + 42.5;
-						// ctx.moveTo(currentGame.player.x, currentGame.player.y);
-						// ctx.lineTo(currentGame.player.x + 25, currentGame.player.y + 0);
-						// ctx.strokeStyle="red";
-						// ctx.stroke();
-						break;
-					case "NW":
-						currentGame.laser.x = currentGame.player.x + 0;
-						currentGame.laser.y = currentGame.player.y + 0;
-						currentGame.laser.endpointx = currentGame.player.x - 125 + 0;
-						currentGame.laser.endpointy = currentGame.player.y - 125 + 0;
-						// ctx.moveTo(currentGame.player.x, currentGame.player.y);
-						// ctx.lineTo(currentGame.player.x - 25, currentGame.player.y - 25);
-						// ctx.strokeStyle="red";
-						// ctx.stroke();
-						break;
-				}
-				setTimeout(function () {
-					currentGame.laser.exists = false;
-				}, 400);
-			}
-			if (e.keyCode === 88) { //fire green
-			}
-			if (e.keyCode === 67) { //fire blue
-			}
-			console.log(this.x, this.y);
-			// refreshCanvas();
-		}
-	}
+var Player = function(x, y, vx, vy, direction, image, rLaserLevel, gLaserLevel, bLaserLevel, hit, laserFired) {
+	Sprite.call(this, x, y, vx, vy);
+	this.direction = direction;
+	this.image = image;
+	this.rLaserLevel = rLaserLevel;
+	this.gLaserLevel = gLaserLevel;
+	this.bLaserLevel = bLaserLevel;
 }
 
 Player.prototype = Object.create(Sprite.prototype);
 Player.prototype.constructor = Player;
+Player.prototype.draw = function() {
+	playerImage.src = currentGame.player.image;
+	console.log(this.x, this.y);
 
-class UFO {
-	constructor(x, y, vx, vy, image, color, direction, hit) {
-		Sprite.call(this, x, y, vx, vy, image);
-		this.color = color;
-		this.image = image;
-		this.direction = direction;
-	}
-	reDraw() {
-		var theImage = new Image();
-		theImage.src = this.image;
-		ctx.drawImage(theImage, this.x, this.y, 85, 85);
-	}
-	moveAround() {
-		var randomDirectionSeed = 3;
-		setInterval(function () {
-			randomDirectionSeed = Math.floor(Math.random() * 8);
-		}, 2000);
-		switch (randomDirectionSeed) {
-			case 0:
-				this.y -= playerSpeed;
-				break;
-			case 1:
-				this.x += playerSpeed;
-				this.y -= playerSpeed;
-				break;
-			case 2:
-				this.x += playerSpeed;
-				break;
-			case 3:
-				this.x += playerSpeed;
-				this.y += playerSpeed;
-				break;
-			case 4:
-				this.y += playerSpeed;
-				break;
-			case 5:
-				this.x -= playerSpeed;
-				this.y += playerSpeed;
-				break;
-			case 6:
-				this.x -= playerSpeed;
-				break;
-			case 7:
-				this.x -= playerSpeed;
-				this.y -= playerSpeed;
-				break;
-		}
+	var that = this;
+
+	playerImage.onload = function() {
+		ctx.drawImage(playerImage, that.x, that.y, 85, 85);
 	}
 }
+Player.prototype.reDraw = function() {
+	ctx.drawImage(playerImage, this.x, this.y, 85, 85);
+}
+Player.prototype.move = function(e) {
+	e.preventDefault();
+
+	if(enableMovement) {
+
+		if(e.keyCode === 38) { // Up Arrow
+			console.log("Up Arrow!");
+			switch(this.direction) {
+				case "N":
+					this.y -= playerSpeed;
+					break;
+				case "NE":
+					this.x += playerSpeed;
+					this.y -= playerSpeed;
+					break;
+				case "E":
+					this.x += playerSpeed;
+					break;
+				case "SE":
+					this.x += playerSpeed;
+					this.y += playerSpeed;
+					break;
+				case "S":
+					this.y += playerSpeed;
+					break;
+				case "SW":
+					this.x -= playerSpeed;
+					this.y += playerSpeed;
+					break;
+				case "W":
+					this.x -= playerSpeed;
+					break;
+				case "NW":
+					this.x -= playerSpeed;
+					this.y -= playerSpeed;
+					break;
+			}
+		} 
+
+		if(e.keyCode === 37) { // Left Arrow
+			console.log("Left Arrow!")
+			switch(this.direction) {
+				case "N":
+					this.direction = "NW";
+					playerImage.src = "img/player-nw.png";
+					break;
+				case "NE":
+					this.direction = "N";
+					playerImage.src = "img/player-n.png";
+					break;
+				case "E":
+					this.direction = "NE";
+					playerImage.src = "img/player-ne.png";
+					break;
+				case "SE":
+					this.direction = "E";
+					playerImage.src = "img/player-e.png";
+					break;
+				case "S":
+					this.direction = "SE";
+					playerImage.src = "img/player-se.png";
+					break;
+				case "SW":
+					this.direction = "S";
+					playerImage.src = "img/player-s.png";
+					break;
+				case "W":
+					this.direction = "SW";
+					playerImage.src = "img/player-sw.png";
+					break;
+				case "NW":
+					this.direction = "W";
+					playerImage.src = "img/player-w.png";
+					break;
+			}
+		}
+
+		if(e.keyCode === 39) { // Right Arrow
+			console.log("Right Arrow!")
+			switch(this.direction) {
+				case "N":
+					this.direction = "NE";
+					playerImage.src = "img/player-ne.png";
+					break;
+				case "NE":
+					this.direction = "E";
+					playerImage.src = "img/player-e.png";
+					break;
+				case "E":
+					this.direction = "SE";
+					playerImage.src = "img/player-se.png";
+					break;
+				case "SE":
+					this.direction = "S";
+					playerImage.src = "img/player-s.png";
+					break;
+				case "S":
+					this.direction = "SW";
+					playerImage.src = "img/player-sw.png";
+					break;
+				case "SW":
+					this.direction = "W";
+					playerImage.src = "img/player-w.png";
+					break;
+				case "W":
+					this.direction = "NW";
+					playerImage.src = "img/player-nw.png";
+					break;
+				case "NW":
+					this.direction = "N";
+					playerImage.src = "img/player-n.png";
+					break;
+			}
+		}
+
+		if(e.keyCode === 90) { // fire red
+
+			currentGame.laser = { exists: true };
+		
+			console.log(currentGame);
+			switch(this.direction) {
+				case "N":
+					currentGame.laser.x = currentGame.player.x + 42.5;
+					currentGame.laser.y = currentGame.player.y + 0;
+					currentGame.laser.endpointx = currentGame.player.x + 0 + 42.5;
+					currentGame.laser.endpointy = currentGame.player.y - 125 + 0;
+					// ctx.moveTo(currentGame.player.x, currentGame.player.y);
+					// ctx.lineTo(currentGame.player.x + 0, currentGame.player.y - 25);
+					// ctx.strokeStyle="red";
+					// ctx.stroke();
+					break;
+				case "NE":
+					currentGame.laser.x = currentGame.player.x + 85;
+					currentGame.laser.y = currentGame.player.y + 0;
+					currentGame.laser.endpointx = currentGame.player.x + 125 + 85;
+					currentGame.laser.endpointy = currentGame.player.y - 125 + 0;
+					// ctx.moveTo(currentGame.player.x, currentGame.player.y);
+					// ctx.lineTo(currentGame.player.x + 25, currentGame.player.y - 25);
+					// ctx.strokeStyle="red";
+					// ctx.stroke();
+					break;
+				case "E":
+					currentGame.laser.x = currentGame.player.x + 85;
+					currentGame.laser.y = currentGame.player.y + 42.5;
+					currentGame.laser.endpointx = currentGame.player.x + 125 + 85;
+					currentGame.laser.endpointy = currentGame.player.y + 0 + 42.5;
+					// ctx.moveTo(currentGame.player.x, currentGame.player.y);
+					// ctx.lineTo(currentGame.player.x + 25, currentGame.player.y + 0);
+					// ctx.strokeStyle="red";
+					// ctx.stroke();
+					break;
+				case "SE":
+					currentGame.laser.x = currentGame.player.x + 85;
+					currentGame.laser.y = currentGame.player.y + 85;
+					currentGame.laser.endpointx = currentGame.player.x + 125 + 85;
+					currentGame.laser.endpointy = currentGame.player.y + 125 + 85;
+					// ctx.moveTo(currentGame.player.x, currentGame.player.y);
+					// ctx.lineTo(currentGame.player.x + 25, currentGame.player.y +25);
+					// ctx.strokeStyle="red";
+					// ctx.stroke();
+					break;
+				case "S":
+					currentGame.laser.x = currentGame.player.x + 42.5;
+					currentGame.laser.y = currentGame.player.y + 85;
+					currentGame.laser.endpointx = currentGame.player.x + 0 + 42.5;
+					currentGame.laser.endpointy = currentGame.player.y + 125 + 85;
+					// ctx.moveTo(currentGame.player.x, currentGame.player.y);
+					// ctx.lineTo(currentGame.player.x + 0, currentGame.player.y + 25);
+					// ctx.strokeStyle="red";
+					// ctx.stroke();
+					break;
+				case "SW":
+					currentGame.laser.x = currentGame.player.x + 0;
+					currentGame.laser.y = currentGame.player.y + 85;
+					currentGame.laser.endpointx = currentGame.player.x - 125 + 0;
+					currentGame.laser.endpointy = currentGame.player.y + 125 + 85;
+					// ctx.moveTo(currentGame.player.x, currentGame.player.y);
+					// ctx.lineTo(currentGame.player.x - 25, currentGame.player.y + 25);
+					// ctx.strokeStyle="red";
+					// ctx.stroke();
+					break;
+				case "W":
+					currentGame.laser.x = currentGame.player.x + 0;
+					currentGame.laser.y = currentGame.player.y + 42.5;
+					currentGame.laser.endpointx = currentGame.player.x - 125 + 0;
+					currentGame.laser.endpointy = currentGame.player.y + 0 + 42.5;
+					// ctx.moveTo(currentGame.player.x, currentGame.player.y);
+					// ctx.lineTo(currentGame.player.x + 25, currentGame.player.y + 0);
+					// ctx.strokeStyle="red";
+					// ctx.stroke();
+					break;
+				case "NW":
+					currentGame.laser.x = currentGame.player.x + 0;
+					currentGame.laser.y = currentGame.player.y + 0;
+					currentGame.laser.endpointx = currentGame.player.x - 125 + 0;
+					currentGame.laser.endpointy = currentGame.player.y - 125 + 0;
+					// ctx.moveTo(currentGame.player.x, currentGame.player.y);
+					// ctx.lineTo(currentGame.player.x - 25, currentGame.player.y - 25);
+					// ctx.strokeStyle="red";
+					// ctx.stroke();
+					break;
+			}
+
+			setTimeout(function(){
+				currentGame.laser.exists = false;
+			},400)
+		}
+
+		if(e.keyCode === 88) { //fire green
+			
+		}
+
+		if(e.keyCode === 67) { //fire blue
+			
+		}
+
+		console.log(this.x, this.y);
+		// refreshCanvas();
+	}
+}
+
+var UFO = function(x, y, vx, vy, image, color, direction, hit) {
+	Sprite.call(this, x, y, vx, vy, image);
+	this.color = color;
+	this.image = image;
+	this.direction = direction;
+}	
 UFO.prototype = Object.create(Sprite.prototype);
 UFO.prototype.constructor = UFO;
 
