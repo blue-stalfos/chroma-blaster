@@ -295,7 +295,50 @@ class UFO {
 UFO.prototype = Object.create(Sprite.prototype);
 UFO.prototype.constructor = UFO;
 
+UFO.prototype.reDraw = function() {
+	var theImage = new Image();
+	theImage.src = this.image;
+	ctx.drawImage(theImage, this.x, this.y, 85, 85);
+}
 
+// UFO.prototype.moveAround = function() {
+// 	var randomDirectionSeed = 3;
+	
+// 	setInterval(function() {
+// 		randomDirectionSeed = Math.floor(Math.random() * 8);
+// 	},2000);
+
+// 	switch(randomDirectionSeed) {
+// 		case 0:
+// 			this.y -= playerSpeed;
+// 			break;
+// 		case 1:
+// 			this.x += playerSpeed;
+// 			this.y -= playerSpeed;
+// 			break;
+// 		case 2:
+// 			this.x += playerSpeed;
+// 			break;
+// 		case 3:
+// 			this.x += playerSpeed;
+// 			this.y += playerSpeed;
+// 			break;
+// 		case 4:
+// 			this.y += playerSpeed;
+// 			break;
+// 		case 5:
+// 			this.x -= playerSpeed;
+// 			this.y += playerSpeed;
+// 			break;
+// 		case 6:
+// 			this.x -= playerSpeed;
+// 			break;
+// 		case 7:
+// 			this.x -= playerSpeed;
+// 			this.y -= playerSpeed;
+// 			break;
+// 	}
+// }
 
 var index = 0;
 function spawnUFO() {
@@ -332,51 +375,51 @@ function spawnUFO() {
 }
 
 
-function rotateSprite(whichSprite) {
-	var image = new Image();
-	switch(whichSprite) {
-		case 0:
-			image.src = "img/player.png";
-			break;
-		case 1:
-			image.src = "img/ufo-cyan.png";
-			break;
-		case 2:
-			image.src = "img/ufo-magenta.png";
-			break;
-		case 3:
-			image.src = "img/ufo-yellow.png";
-			break;
-		default:
-			console.log("Uh oh.");
-			break;
-	}
+// function rotateSprite(whichSprite) {
+// 	var image = new Image();
+// 	switch(whichSprite) {
+// 		case 0:
+// 			image.src = "img/player.png";
+// 			break;
+// 		case 1:
+// 			image.src = "img/ufo-cyan.png";
+// 			break;
+// 		case 2:
+// 			image.src = "img/ufo-magenta.png";
+// 			break;
+// 		case 3:
+// 			image.src = "img/ufo-yellow.png";
+// 			break;
+// 		default:
+// 			console.log("Uh oh.");
+// 			break;
+// 	}
 	
-	function draw(x, y, degrees) {	
+// 	function draw(x, y, degrees) {	
 
-		ctx.translate(x + image.width / 2, y + image.height / 2);
-		ctx.rotate(degrees * Math.PI / 180);
-		ctx.drawImage(image, 0, 0, image.width, image.height, -image.width / 2, -image.height / 2, image.width, image.height);
-		ctx.rotate(-degrees * Math.PI / 180);
-		ctx.translate(-x - image.width / 2, -y - image.height / 2);
-	}
+// 		ctx.translate(x + image.width / 2, y + image.height / 2);
+// 		ctx.rotate(degrees * Math.PI / 180);
+// 		ctx.drawImage(image, 0, 0, image.width, image.height, -image.width / 2, -image.height / 2, image.width, image.height);
+// 		ctx.rotate(-degrees * Math.PI / 180);
+// 		ctx.translate(-x - image.width / 2, -y - image.height / 2);
+// 	}
 
-	// TODO: Wrap the following loop in an if statement so that only enemies are constantly rotating
+// 	// TODO: Wrap the following loop in an if statement so that only enemies are constantly rotating
 
-	image.onload = function () {
-		var degrees = 0;
+// 	image.onload = function () {
+// 		var degrees = 0;
 
-		function loop() {
-			// ctx.clearRect(0, 0, 800,700);
-			degrees = (degrees + 1) % 360;
-			draw(0, 0, degrees);
-			window.requestAnimationFrame(loop);
-		};
+// 		function loop() {
+// 			// ctx.clearRect(0, 0, 800,700);
+// 			degrees = (degrees + 1) % 360;
+// 			draw(0, 0, degrees);
+// 			window.requestAnimationFrame(loop);
+// 		};
 
-		window.requestAnimationFrame(loop);
-	};
-	// ====================================================================================
-};
+// 		window.requestAnimationFrame(loop);
+// 	};
+// 	// ====================================================================================
+// };
 
 function detectCollision() {
 	currentGame.ufo.forEach(function(oneUFO) {
