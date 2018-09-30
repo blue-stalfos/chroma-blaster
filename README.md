@@ -1,5 +1,7 @@
 # Chroma Blaster!
 
+Click here to play: https://blue-stalfos.github.io/chroma-blaster/
+
 RULES:
 
 1. Blow up the UFOs before they blow up your ship! 
